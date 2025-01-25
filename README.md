@@ -1,6 +1,6 @@
 # Q-learning for FrozenLake
 
-This repository contains an implementation of the **Q-learning** algorithm applied to the **FrozenLake** environment from OpenAI Gym. The agent learns to navigate through a grid-based world to reach the goal while avoiding holes, using **Q-learning** to optimize its strategy.
+This repository contains an implementation of the **Q-learning** reinforcement learning algorithm applied to the **FrozenLake** environment from OpenAI Gym. The agent learns to navigate through a grid-based world to reach the goal while avoiding holes, using **Q-learning** to optimize its strategy.
 
 ## Game Visualization
 Here is a gif of what the **FrozenLake** game looks like in action:
