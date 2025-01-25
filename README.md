@@ -39,7 +39,7 @@ pip install gym numpy
 ### Running the Q-learning Algorithm
 
 ```bash
-python q_learning_frozenlake.py
+python main.py
 ```
 
 ## Hyperparameters
