@@ -35,7 +35,7 @@ The **Bellman equation** used to update the **Q-value**:
 
 Ensure you have the following Python libraries installed:
 
-- `gym == 0.26.2`
+- `gym==0.26.2`
 - `numpy`
 
 To install these dependencies, run:
