@@ -1,33 +1,6 @@
-import argparse
 import numpy as np
 from shaped_frozen_lake import ShapedFrozenLake
-
-
-def parse_args() -> argparse.Namespace:
-    """
-    Parses command-line arguments for Q-learning hyperparameters.
-
-    This function uses argparse to parse hyperparameters such as learning rate, discount factor, 
-    exploration rate, and others, allowing you to configure the Q-learning algorithm via command line.
-
-    Parameters:
-    - None
-
-    Returns:
-    - argparse.Namespace: Object containing parsed arguments
-    """
-    parser = argparse.ArgumentParser(description="Q-learning for FrozenLake")
-
-    # hyperparameters
-    parser.add_argument('--alpha', type=float, default=0.01, help='learning rate (alpha)')
-    parser.add_argument('--gamma', type=float, default=0.99, help='discount factor (gamma)')
-    parser.add_argument('--epsilon', type=float, default=1.0, help='exploration rate (epsilon)')
-    parser.add_argument('--epsilon_decay', type=float, default=0.995, help='decay rate for epsilon')
-    parser.add_argument('--min_epsilon', type=float, default=0.01, help='minimum value of epsilon')
-    parser.add_argument('--episodes', type=int, default=10000, help='number of training episodes')
-    parser.add_argument('--max_steps', type=int, default=1000, help='maximum steps per episode')
-
-    return parser.parse_args()
+from utils import parse_args
 
 
 def train_agent() -> None:
@@ -46,6 +19,10 @@ def train_agent() -> None:
     """
     args = parse_args()
     
+    # access flags from args
+    is_slippery = args.is_slippery
+    reward_shaping = args.reward_shaping
+    
     # access hyperparameters from args
     alpha = args.alpha
     gamma = args.gamma
@@ -56,7 +33,7 @@ def train_agent() -> None:
     max_steps = args.max_steps
 
     # initialize environment (FrozenLake with reward shaping custom class)
-    env = ShapedFrozenLake(is_slippery=False, reward_shaping=False)
+    env = ShapedFrozenLake(is_slippery=is_slippery, reward_shaping=reward_shaping)
 
     # initialize Q-table
     q_table = np.zeros([env.observation_space.n, env.action_space.n])
@@ -79,7 +56,7 @@ def train_agent() -> None:
             # take the action and observe the next state and reward
             next_state, reward, done, _ = env.step(action)
 
-            # update Q-table
+            # update Q-table with Bellman equation
             q_table[state, action] = q_table[state, action] + alpha * (reward + gamma * np.max(q_table[next_state]) - q_table[state, action])
 
             state = next_state

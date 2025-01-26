@@ -18,10 +18,18 @@ This implementation demonstrates how an agent learns optimal actions over episod
 
 - **Q-learning**: A reinforcement learning algorithm that helps an agent learn the value of actions in different states, ultimately learning a policy that maximizes its total reward. More detail on [Wikipedia](https://en.wikipedia.org/wiki/Q-learning).
 - **Q-table**: A table (or matrix) that stores the Q-values of state-action pairs. Each row corresponds to a specific state in the environment, and each column corresponds to a specific action. Hence, each cell represents the **Q-value** of taking a specific action in a specific state the agent can take.
-- **Q-value**: An estimate of the total (or future) reward the agent can expect to receive from that state-action pair, assuming it follows the optimal policy from there onward. Over time, the agent updates these values to improve its policy (the strategy for choosing actions).
 - **State Space**: The set of all possible states in the environment. In FrozenLake, the agent moves on a grid, and the state is the position in the grid.
 - **Action Space**: The possible actions the agent can take, i.e., moving up, down, left, or right.
 - **Exploration vs. Exploitation**: The agent must balance exploring new actions (randomly) and exploiting known good actions (according to its Q-table).
+- **Q-value**: An estimate of the total (or future) reward the agent can expect to receive from that state-action pair, assuming it follows the optimal policy from there onward. Over time, the agent updates these values to improve its policy (the strategy for choosing actions). It is updated using the **Bellman equation**.
+
+--- 
+
+The **Bellman equation** used to update the **Q-value**:
+
+![Bellman equation](./assets/bellman.svg)
+
+<p align="center"><a href="https://en.wikipedia.org/wiki/Q-learning#Algorithm" target="_blank">Sourced from Wikipedia - Q-learning Algorithm</a></p>
 
 ## Requirements
 
@@ -38,8 +46,42 @@ pip install gym numpy
 
 ### Running the Q-learning Algorithm
 
+This will run it with the default hyperparameter values:
 ```bash
-python main.py
+> python main.py
+```
+
+Note that you can always run the following to see which arguments are supported:
+```bash
+> python main.py -h
+
+usage: main.py [-h] [--is_slippery IS_SLIPPERY] [--reward_shaping REWARD_SHAPING] [--alpha ALPHA] [--gamma GAMMA]
+               [--epsilon EPSILON] [--epsilon_decay EPSILON_DECAY] [--min_epsilon MIN_EPSILON] [--episodes EPISODES]
+               [--max_steps MAX_STEPS]
+
+Q-learning for FrozenLake
+
+options:
+  -h, --help            show this help message and exit
+  --is_slippery IS_SLIPPERY
+                        If True, environment is slippery.
+  --reward_shaping REWARD_SHAPING
+                        If True, reward shaping is applied.
+  --alpha ALPHA         learning rate (alpha)
+  --gamma GAMMA         discount factor (gamma)
+  --epsilon EPSILON     exploration rate (epsilon)
+  --epsilon_decay EPSILON_DECAY
+                        decay rate for epsilon
+  --min_epsilon MIN_EPSILON
+                        minimum value of epsilon
+  --episodes EPISODES   number of training episodes
+  --max_steps MAX_STEPS
+                        maximum steps per episode
+```
+
+Here is an example:
+```bash
+> python main.py --is_slippery n --reward_shaping n --alpha 0.01 --gamma 0.99 --epsilon 1.0 --epsilon_decay 0.995 --min_epsilon 0.01 --episodes 10000 --max_steps 1000
 ```
 
 ## Hyperparameters
@@ -73,10 +115,6 @@ The following hyperparameters are used in the Q-learning algorithm to control th
 - **Max Steps per Episode** - `max_steps`: 
   - The maximum number of steps the agent will take per episode before terminating it. This helps prevent infinite loops in environments that don't have a clear terminal state.
 
-
-### TODO
-- [ ] `README.md`: More detail. Hyperparameters. Training.
-- [ ] `q_learning_frozenlake.py`: The Python code of course.
 
 ## License
 
