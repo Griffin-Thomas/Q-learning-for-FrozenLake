@@ -43,12 +43,12 @@ Ensure you have the following Python libraries installed:
 To install these dependencies, run:
 
 ```bash
-pip install -r requirements.txt
+> pip install -r requirements.txt
 ```
 
 ### Running the Q-learning Algorithm
 
-From the root directory, this will run the training with the default hyperparameter values:
+From the root directory, this will run the training with the default environment configuration and hyperparameter values:
 ```bash
 > python -m q_learning.main
 ```
@@ -86,36 +86,54 @@ Here is an example:
 > python -m q_learning.main --is_slippery n --reward_shaping n --alpha 0.01 --gamma 0.99 --epsilon 1.0 --epsilon_decay 0.995 --min_epsilon 0.01 --episodes 10000 --max_steps 1000
 ```
 
+## Environment Configuration
+
+The following options configure the environment behaviour:
+
+- **is_slippery**:
+  - Determines if the FrozenLake environment is slippery or not. If set to `True`, the environment will have slippery tiles, making movement less deterministic. If set to `False`, the environment is deterministic.
+  - Default: `False`
+
+- **reward_shaping**:
+  - Determines whether or not reward shaping is applied. If set to `True`, the agent receives additional rewards or penalties based on its proximity to the goal. If set to `False`, no additional rewards are applied beyond the standard FrozenLake rewards.
+  - Default: `False`
+
 ## Hyperparameters
 
 The following hyperparameters are used in the Q-learning algorithm to control the learning process:
 
 - **Alpha (learning rate)** - `alpha`: 
   - Controls how much the Q-values are updated after each action. A higher value means the agent will update its Q-values more aggressively.
-  - Typical range: [0.0, 1.0] - note that this is a closed interval.
+  - Typical range: [0.0, 1.0] - note that this is a closed interval
+  - Default: `0.01`
 
 - **Gamma (discount factor)** - `gamma`: 
   - Determines the importance of future rewards. A value of 0 means the agent only cares about immediate rewards, while a value close to 1 means it values future rewards highly.
   - Typical range: [0.0, 1.0]
+  - Default: `0.99`
 
 - **Epsilon (exploration rate)** - `epsilon`:
   - Controls the exploration vs exploitation trade-off. A higher value encourages the agent to explore more by choosing random actions, while a lower value encourages exploitation of known actions.
   - Typical range: [0.0, 1.0]
   - Can decay over time as the agent becomes more confident in its policy.
+  - Default: `1.0`
 
 - **Epsilon Decay (optional)** - `epsilon_decay`:
   - Decreases the epsilon value over time to gradually reduce exploration as the agent learns.
+  - Default: `0.995`
 
 - **Minimum Epsilon** - `min_epsilon`:
   - Defines the lower bound for epsilon. Once epsilon decays to this value, it will no longer decrease further. This ensures the agent still explores occasionally even as it becomes more confident in its policy.
   - Typical range: [0.0, 1.0]
-  - Ensures that exploration does not completely stop, which helps avoid getting stuck in local optima.
+  - Default: `0.01`
 
 - **Number of Episodes** - `episodes`: 
   - The total number of episodes (complete runs) the agent will be trained on. More episodes help the agent to learn better.
+  - Default: `10000`
 
 - **Max Steps per Episode** - `max_steps`: 
   - The maximum number of steps the agent will take per episode before terminating it. This helps prevent infinite loops in environments that don't have a clear terminal state.
+  - Default: `1000`
 
 ## Training Output Explanation
 During the training process, you will see periodic updates that provide insights into the agent’s performance and its exploration strategy. 
@@ -145,8 +163,8 @@ Training completed!
 - **Total Reward**: The total reward accumulated during that episode. This is a measure of how well the agent performed, with higher values indicating better performance. Initially, the reward may be low as the agent explores the environment and learns, but over time, the reward should increase as the agent improves its policy. In the above output, the reward quickly reaches `1.0`, which is the optimal reward for this game.
     - **Reward**: The reward given by the environment at each step of the episode. The environment has a reward schedule that determines the points awarded for different actions:
         - **Reach goal (G)**: +1 (positive reward)
-        - **Reach hole (H)**: 0 (no reward, since reward shaping is off)
-        - **Reach frozen (F)**: 0 (no reward, since reward shaping is off)
+        - **Reach hole (H)**: 0 (no reward, since reward shaping is off in this example)
+        - **Reach frozen (F)**: 0 (no reward, since reward shaping is off in this example)
 
 - **Epsilon (ε)**: Epsilon represents the exploration rate of the agent. It controls the likelihood of choosing a random action (exploration) versus following the current best-known action (exploitation). 
   - High values of epsilon (close to 1) indicate that the agent is exploring more by choosing random actions.
@@ -169,7 +187,6 @@ Training completed!
    - Epsilon has decreased to its minimum value (`0.01`), meaning the agent is now largely exploiting its knowledge and rarely choosing random actions.
 
 ## TODO
-- [ ] `README.md`: Explain clearly what `is_slippery` and `reward_shaping` are.
 - [ ] `tests/`: Unit tests for the project.
 
 ## License
