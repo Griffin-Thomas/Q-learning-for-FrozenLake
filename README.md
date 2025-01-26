@@ -35,18 +35,18 @@ The **Bellman equation** used to update the **Q-value**:
 
 Ensure you have the following Python libraries installed:
 
-- `gym`
+- `gym == 0.26.2`
 - `numpy`
 
 To install these dependencies, run:
 
 ```bash
-pip install gym numpy
+pip install gym==0.26.2 numpy
 ```
 
 ### Running the Q-learning Algorithm
 
-This will run it with the default hyperparameter values:
+This will run the training with the default hyperparameter values:
 ```bash
 > python main.py
 ```
@@ -115,6 +115,56 @@ The following hyperparameters are used in the Q-learning algorithm to control th
 - **Max Steps per Episode** - `max_steps`: 
   - The maximum number of steps the agent will take per episode before terminating it. This helps prevent infinite loops in environments that don't have a clear terminal state.
 
+## Training Output Explanation
+During the training process, you will see periodic updates that provide insights into the agent’s performance and its exploration strategy. 
+
+Below is an example of the output:
+```bash
+is_slippery=False
+reward_shaping=False
+episode 0: total reward = 0.0, epsilon = 0.995
+episode 100: total reward = 0.0, epsilon = 0.6027415843082742
+episode 200: total reward = 1.0, epsilon = 0.36512303261753626
+episode 300: total reward = 1.0, epsilon = 0.2211807388415433
+episode 400: total reward = 1.0, epsilon = 0.13398475271138335
+episode 500: total reward = 1.0, epsilon = 0.0811640021330769
+episode 600: total reward = 1.0, epsilon = 0.04916675299948831
+episode 700: total reward = 1.0, epsilon = 0.029783765425331846
+episode 800: total reward = 1.0, epsilon = 0.018042124582040707
+episode 900: total reward = 1.0, epsilon = 0.010929385683282892
+episode 1000: total reward = 1.0, epsilon = 0.01
+Training completed!
+```
+
+### What to Expect from the Output
+
+- **Episode Number**: Each line represents the result after completing an episode (a complete run of the environment). In this example, it shows progress every 100 episodes for 1000 episodes total.
+  
+- **Total Reward**: The total reward accumulated during that episode. This is a measure of how well the agent performed, with higher values indicating better performance. Initially, the reward may be low as the agent explores the environment and learns, but over time, the reward should increase as the agent improves its policy. In the above output, the reward quickly reaches `1.0`, which is the optimal reward for this game.
+    - **Reward**: The reward given by the environment at each step of the episode. The environment has a reward schedule that determines the points awarded for different actions:
+        - **Reach goal (G)**: +1 (positive reward)
+        - **Reach hole (H)**: 0 (no reward, since reward shaping is off)
+        - **Reach frozen (F)**: 0 (no reward, since reward shaping is off)
+
+- **Epsilon (ε)**: Epsilon represents the exploration rate of the agent. It controls the likelihood of choosing a random action (exploration) versus following the current best-known action (exploitation). 
+  - High values of epsilon (close to 1) indicate that the agent is exploring more by choosing random actions.
+  - Low values (close to 0) indicate that the agent is exploiting its learned policy and choosing the best-known actions.
+  
+  As you can see in the example, the epsilon value starts at `0.995` and gradually decays with each episode due to the `epsilon_decay` parameter. By the end of the training, epsilon stabilizes at `0.01`, meaning the agent has mostly switched to exploitation, relying on the learned policy.
+
+### How to Interpret the Output
+
+1. **Early Episodes (0-100)**:
+   - In the beginning, the agent is exploring the environment and learning from random actions, which can result in low or no rewards.
+   - Epsilon is still high, so exploration is prioritized over exploitation.
+
+2. **Mid-Training (100-1000)**:
+   - The agent starts gaining rewards as it learns the environment and its actions become more intentional.
+   - Epsilon is decaying, which means the agent is starting to exploit its learned policy more while still exploring occasionally.
+
+3. **Late Training (1000-10000)**:
+   - The agent consistently earns the maximum reward (`1.0`), indicating that it has learned an effective strategy for interacting with the environment.
+   - Epsilon has decreased to its minimum value (`0.01`), meaning the agent is now largely exploiting its knowledge and rarely choosing random actions.
 
 ## License
 

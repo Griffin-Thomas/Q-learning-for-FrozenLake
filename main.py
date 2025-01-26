@@ -23,6 +23,9 @@ def train_agent() -> None:
     is_slippery = args.is_slippery
     reward_shaping = args.reward_shaping
     
+    print(f"{is_slippery=}")
+    print(f"{reward_shaping=}")
+    
     # access hyperparameters from args
     alpha = args.alpha
     gamma = args.gamma
