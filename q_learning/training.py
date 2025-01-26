@@ -18,14 +18,14 @@ def train_agent() -> None:
     - None
     """
     args = parse_args()
-    
+
     # access flags from args
     is_slippery = args.is_slippery
     reward_shaping = args.reward_shaping
-    
+
     print(f"{is_slippery=}")
     print(f"{reward_shaping=}")
-    
+
     # access hyperparameters from args
     alpha = args.alpha
     gamma = args.gamma
@@ -36,17 +36,18 @@ def train_agent() -> None:
     max_steps = args.max_steps
 
     # initialize environment (FrozenLake with reward shaping custom class)
-    env = ShapedFrozenLake(is_slippery=is_slippery, reward_shaping=reward_shaping)
+    env = ShapedFrozenLake(is_slippery=is_slippery,
+                           reward_shaping=reward_shaping)
 
     # initialize Q-table
     q_table = np.zeros([env.observation_space.n, env.action_space.n])
 
     # Q-learning algorithm
     for episode in range(episodes):
-        state, _ = env.reset() # reset environment at the start of each episode
+        state, _ = env.reset()  # reset environment at the start of each episode
         done = False
         total_reward = 0
-        
+
         for _ in range(max_steps):
             # exploration vs exploitation
             if np.random.uniform(0, 1) < epsilon:
@@ -60,11 +61,13 @@ def train_agent() -> None:
             next_state, reward, done, _ = env.step(action)
 
             # update Q-table with Bellman equation
-            q_table[state, action] = q_table[state, action] + alpha * (reward + gamma * np.max(q_table[next_state]) - q_table[state, action])
+            q_table[state, action] = q_table[state, action] + alpha * \
+                (reward + gamma *
+                 np.max(q_table[next_state]) - q_table[state, action])
 
             state = next_state
             total_reward += reward
-            
+
             if done:
                 break
 
@@ -73,6 +76,7 @@ def train_agent() -> None:
 
         # the total reward per 100 episodes
         if episode % 100 == 0:
-            print(f"episode {episode}: total reward = {total_reward}, epsilon = {epsilon}")
+            print(f"episode {episode}: total reward = {
+                  total_reward}, epsilon = {epsilon}")
 
     print("Training completed!")

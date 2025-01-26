@@ -20,31 +20,32 @@ class ShapedFrozenLake(gym.Env):
     action = env.action_space.sample()
     next_state, reward, done, _ = env.step(action)
     """
+
     def __init__(self, is_slippery=True, reward_shaping=True):
         super(ShapedFrozenLake, self).__init__()
         self.env = gym.make('FrozenLake-v1', is_slippery=is_slippery)
         self.reward_shaping = reward_shaping
         self.observation_space = self.env.observation_space
         self.action_space = self.env.action_space
-        
+
     def reset(self):
         return self.env.reset()
-    
+
     def step(self, action):
         state, reward, done, _, info = self.env.step(action)
 
         # apply reward shaping
         if self.reward_shaping:
             # apply additional reward or penalty for proximity to the goal
-            reward = reward_shaping(state, reward)    
+            reward = reward_shaping(state, reward)
 
         return state, reward, done, info
-    
+
 
 def reward_shaping(state, reward, goal_position=(3, 3)):
     """
     Applies reward shaping to encourage behaviour toward the goal and penalize bad actions.
-    
+
     Parameters:
     - state: The current state of the agent
     - reward: The original reward from the environment
@@ -59,14 +60,15 @@ def reward_shaping(state, reward, goal_position=(3, 3)):
                 "FFFH",
                 "HFFG"
                 ] where S = start, F = frozen, H = hole, G = goal
-    
+
     Returns:
     - Shaped reward
     """
-    current_position = (state // 4, state % 4) 
+    current_position = (state // 4, state % 4)
     # Manhattan distance (sum of horizontal and vertical distance)
-    distance_to_goal = abs(current_position[0] - goal_position[0]) + abs(current_position[1] - goal_position[1])
-    
+    distance_to_goal = abs(
+        current_position[0] - goal_position[0]) + abs(current_position[1] - goal_position[1])
+
     # if the agent fell into a hole, penalize based on distance to goal
     if reward == 0:
         return -0.05 * distance_to_goal
