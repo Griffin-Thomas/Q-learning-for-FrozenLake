@@ -29,6 +29,7 @@ The **Bellman equation** used to update the **Q-value**:
 
 <p align="center">
   <img src="./assets/bellman.svg" alt="Bellman equation" />
+  <br>
   <a href="https://en.wikipedia.org/wiki/Q-learning#Algorithm" target="_blank">Sourced from Wikipedia - Q-learning Algorithm</a>
 </p>
 
