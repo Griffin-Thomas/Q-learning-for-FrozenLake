@@ -27,9 +27,10 @@ This implementation demonstrates how an agent learns optimal actions over episod
 
 The **Bellman equation** used to update the **Q-value**:
 
-![Bellman equation](./assets/bellman.svg)
-
-<p align="center"><a href="https://en.wikipedia.org/wiki/Q-learning#Algorithm" target="_blank">Sourced from Wikipedia - Q-learning Algorithm</a></p>
+<p align="center">
+  <img src="./assets/bellman.svg" alt="Bellman equation" />
+  <a href="https://en.wikipedia.org/wiki/Q-learning#Algorithm" target="_blank">Sourced from Wikipedia - Q-learning Algorithm</a>
+</p>
 
 ## Requirements
 
