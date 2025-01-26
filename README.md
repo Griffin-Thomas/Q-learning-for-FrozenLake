@@ -166,6 +166,10 @@ Training completed!
    - The agent consistently earns the maximum reward (`1.0`), indicating that it has learned an effective strategy for interacting with the environment.
    - Epsilon has decreased to its minimum value (`0.01`), meaning the agent is now largely exploiting its knowledge and rarely choosing random actions.
 
+## TODO
+- [ ] `README.md`: Explain clearly what `is_slippery` and `reward_shaping` are.
+- [ ] `test_main.py`: A test script.
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
