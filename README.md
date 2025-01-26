@@ -90,11 +90,11 @@ Here is an example:
 
 The following options configure the environment behaviour:
 
-- **is_slippery**:
+- **`is_slippery`**:
   - Determines if the FrozenLake environment is slippery or not. If set to `True`, the environment will have slippery tiles, making movement less deterministic. If set to `False`, the environment is deterministic.
   - Default: `False`
 
-- **reward_shaping**:
+- **`reward_shaping`**:
   - Determines whether or not reward shaping is applied. If set to `True`, the agent receives additional rewards or penalties based on its proximity to the goal. If set to `False`, no additional rewards are applied beyond the standard FrozenLake rewards.
   - Default: `False`
 
