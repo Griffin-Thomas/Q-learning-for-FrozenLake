@@ -102,36 +102,36 @@ The following options configure the environment behaviour:
 
 The following hyperparameters are used in the Q-learning algorithm to control the learning process:
 
-- **Alpha (learning rate)** - `alpha`: 
+- **Alpha (learning rate)** - **`alpha`**: 
   - Controls how much the Q-values are updated after each action. A higher value means the agent will update its Q-values more aggressively.
   - Typical range: [0.0, 1.0] - note that this is a closed interval
   - Default: `0.01`
 
-- **Gamma (discount factor)** - `gamma`: 
+- **Gamma (discount factor)** - **`gamma`**: 
   - Determines the importance of future rewards. A value of 0 means the agent only cares about immediate rewards, while a value close to 1 means it values future rewards highly.
   - Typical range: [0.0, 1.0]
   - Default: `0.99`
 
-- **Epsilon (exploration rate)** - `epsilon`:
+- **Epsilon (exploration rate)** - **`epsilon`**:
   - Controls the exploration vs exploitation trade-off. A higher value encourages the agent to explore more by choosing random actions, while a lower value encourages exploitation of known actions.
   - Typical range: [0.0, 1.0]
   - Can decay over time as the agent becomes more confident in its policy.
   - Default: `1.0`
 
-- **Epsilon Decay (optional)** - `epsilon_decay`:
+- **Epsilon Decay (optional)** - **`epsilon_decay`**:
   - Decreases the epsilon value over time to gradually reduce exploration as the agent learns.
   - Default: `0.995`
 
-- **Minimum Epsilon** - `min_epsilon`:
+- **Minimum Epsilon** - **`min_epsilon`**:
   - Defines the lower bound for epsilon. Once epsilon decays to this value, it will no longer decrease further. This ensures the agent still explores occasionally even as it becomes more confident in its policy.
   - Typical range: [0.0, 1.0]
   - Default: `0.01`
 
-- **Number of Episodes** - `episodes`: 
+- **Number of Episodes** - **`episodes`**: 
   - The total number of episodes (complete runs) the agent will be trained on. More episodes help the agent to learn better.
   - Default: `10000`
 
-- **Max Steps per Episode** - `max_steps`: 
+- **Max Steps per Episode** - **`max_steps`**: 
   - The maximum number of steps the agent will take per episode before terminating it. This helps prevent infinite loops in environments that don't have a clear terminal state.
   - Default: `1000`
 
