@@ -168,7 +168,7 @@ Training completed!
 
 ## TODO
 - [ ] `README.md`: Explain clearly what `is_slippery` and `reward_shaping` are.
-- [ ] `test_main.py`: A test script.
+- [ ] `tests/`: Unit tests for the project.
 
 ## License
 
