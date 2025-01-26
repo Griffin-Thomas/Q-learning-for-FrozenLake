@@ -36,24 +36,24 @@ The **Bellman equation** used to update the **Q-value**:
 Ensure you have the following Python libraries installed:
 
 - `gym==0.26.2`
-- `numpy`
+- `numpy==1.26.4`
 
 To install these dependencies, run:
 
 ```bash
-pip install gym==0.26.2 numpy
+pip install -r requirements.txt
 ```
 
 ### Running the Q-learning Algorithm
 
-This will run the training with the default hyperparameter values:
+From the root directory, this will run the training with the default hyperparameter values:
 ```bash
-> python main.py
+> python -m q_learning.main
 ```
 
 Note that you can always run the following to see which arguments are supported:
 ```bash
-> python main.py -h
+> python -m q_learning.main -h
 
 usage: main.py [-h] [--is_slippery IS_SLIPPERY] [--reward_shaping REWARD_SHAPING] [--alpha ALPHA] [--gamma GAMMA]
                [--epsilon EPSILON] [--epsilon_decay EPSILON_DECAY] [--min_epsilon MIN_EPSILON] [--episodes EPISODES]
@@ -81,7 +81,7 @@ options:
 
 Here is an example:
 ```bash
-> python main.py --is_slippery n --reward_shaping n --alpha 0.01 --gamma 0.99 --epsilon 1.0 --epsilon_decay 0.995 --min_epsilon 0.01 --episodes 10000 --max_steps 1000
+> python -m q_learning.main --is_slippery n --reward_shaping n --alpha 0.01 --gamma 0.99 --epsilon 1.0 --epsilon_decay 0.995 --min_epsilon 0.01 --episodes 10000 --max_steps 1000
 ```
 
 ## Hyperparameters

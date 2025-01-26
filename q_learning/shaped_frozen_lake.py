@@ -1,40 +1,6 @@
 import gym
 
 
-def reward_shaping(state, reward, goal_position=(3, 3)):
-    """
-    Applies reward shaping to encourage behaviour toward the goal and penalize bad actions.
-    
-    Parameters:
-    - state: The current state of the agent
-    - reward: The original reward from the environment
-        i.e. Reward schedule:
-                Reach goal(G): +1
-                Reach hole(H): 0
-                Reach frozen(F): 0
-    - goal_position: The position of the goal (default is (3, 3) for 4x4 FrozenLake)
-        e.g. "4x4":[
-                "SFFF",
-                "FHFH",
-                "FFFH",
-                "HFFG"
-                ] where S = start, F = frozen, H = hole, G = goal
-    
-    Returns:
-    - Shaped reward
-    """
-    current_position = (state // 4, state % 4) 
-    # Manhattan distance (sum of horizontal and vertical distance)
-    distance_to_goal = abs(current_position[0] - goal_position[0]) + abs(current_position[1] - goal_position[1])
-    
-    # if the agent fell into a hole, penalize based on distance to goal
-    if reward == 0:
-        return -0.05 * distance_to_goal
-
-    # if the agent reached the goal, no further shaping (reward is already 1)
-    return reward
-
-
 class ShapedFrozenLake(gym.Env):
     """
     A custom environment that modifies the reward structure of the FrozenLake environment in OpenAI Gym.
@@ -73,3 +39,37 @@ class ShapedFrozenLake(gym.Env):
             reward = reward_shaping(state, reward)    
 
         return state, reward, done, info
+    
+
+def reward_shaping(state, reward, goal_position=(3, 3)):
+    """
+    Applies reward shaping to encourage behaviour toward the goal and penalize bad actions.
+    
+    Parameters:
+    - state: The current state of the agent
+    - reward: The original reward from the environment
+        i.e. Reward schedule:
+                Reach goal(G): +1
+                Reach hole(H): 0
+                Reach frozen(F): 0
+    - goal_position: The position of the goal (default is (3, 3) for 4x4 FrozenLake)
+        e.g. "4x4":[
+                "SFFF",
+                "FHFH",
+                "FFFH",
+                "HFFG"
+                ] where S = start, F = frozen, H = hole, G = goal
+    
+    Returns:
+    - Shaped reward
+    """
+    current_position = (state // 4, state % 4) 
+    # Manhattan distance (sum of horizontal and vertical distance)
+    distance_to_goal = abs(current_position[0] - goal_position[0]) + abs(current_position[1] - goal_position[1])
+    
+    # if the agent fell into a hole, penalize based on distance to goal
+    if reward == 0:
+        return -0.05 * distance_to_goal
+
+    # if the agent reached the goal, no further shaping (reward is already 1)
+    return reward

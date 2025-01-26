@@ -1,6 +1,6 @@
 import numpy as np
-from shaped_frozen_lake import ShapedFrozenLake
-from utils import parse_args
+from .shaped_frozen_lake import ShapedFrozenLake
+from .utils import parse_args
 
 
 def train_agent() -> None:
@@ -76,6 +76,3 @@ def train_agent() -> None:
             print(f"episode {episode}: total reward = {total_reward}, epsilon = {epsilon}")
 
     print("Training completed!")
-
-# let's run it
-train_agent()
